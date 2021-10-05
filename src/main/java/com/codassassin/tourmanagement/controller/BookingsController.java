@@ -34,7 +34,7 @@ public class BookingsController {
     // build create tour package REST API
     @PostMapping()
     @RolesAllowed({"REGISTERED_USER"})
-    public ResponseEntity<Bookings> saveBooking(@RequestBody SaveBookingRequest request) {
+    public ResponseEntity<Bookings> saveBooking(@RequestBody SaveBookingRequest request) throws Exception{
         return new ResponseEntity<Bookings>(bookingService.saveBooking(request), HttpStatus.CREATED);
     }
 

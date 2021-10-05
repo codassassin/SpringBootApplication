@@ -36,7 +36,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Bookings saveBooking(SaveBookingRequest request) {
+    public Bookings saveBooking(SaveBookingRequest request) throws Exception {
         long userId = request.getUserId();
         long tourId = request.getTourPackageId();
 
@@ -45,7 +45,12 @@ public class BookingServiceImpl implements BookingService {
         User user = userRepository.getUserById(userId);
         TourPackage tourPackage = tourPackageRepository.getTourById(tourId);
 
-        tourPackage.setSeats(tourPackage.getSeats() - request.getNumberOfSeats());
+
+        if((tourPackage.getSeats() - request.getNumberOfSeats()) < 0) {
+            throw new Exception(String.format("Seats full for %s", tourPackage.getPackageName()));
+        } else {
+            tourPackage.setSeats(tourPackage.getSeats() - request.getNumberOfSeats());
+        }
 
         booking.setBookedOn(request.getBookedOn());
         booking.setValid(request.getValid());

@@ -11,7 +11,7 @@ import java.util.List;
 public interface BookingService {
     List<Bookings> getAllBookings();
     Bookings getBooking(long id);
-    Bookings saveBooking(SaveBookingRequest request);
+    Bookings saveBooking(SaveBookingRequest request) throws Exception;
     Bookings updateBooking(Bookings booking, long id);
     void deleteBooking(long id);
 }
