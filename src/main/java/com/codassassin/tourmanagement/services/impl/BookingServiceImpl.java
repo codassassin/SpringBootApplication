@@ -8,10 +8,15 @@ import com.codassassin.tourmanagement.repository.BookingRepository;
 import com.codassassin.tourmanagement.repository.TourPackageRepository;
 import com.codassassin.tourmanagement.repository.UserRepository;
 import com.codassassin.tourmanagement.services.BookingService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -47,7 +52,8 @@ public class BookingServiceImpl implements BookingService {
 
 
         if((tourPackage.getSeats() - request.getNumberOfSeats()) < 0) {
-            throw new Exception(String.format("Seats full for %s", tourPackage.getPackageName()));
+            throw new Exception(String.format("Seats full for %s, only %d seats available",
+                    tourPackage.getPackageName(), request.getNumberOfSeats()));
         } else {
             tourPackage.setSeats(tourPackage.getSeats() - request.getNumberOfSeats());
         }
@@ -65,9 +71,18 @@ public class BookingServiceImpl implements BookingService {
     public Bookings updateBooking(Bookings booking, long id) {
         Bookings existingBooking = bookingRepository.getBookingById(id);
 
-        existingBooking.setBookedOn(booking.getBookedOn());
-        existingBooking.setCancelledOn(booking.getCancelledOn());
-        existingBooking.setIsValid(booking.getIsValid());
+        if(booking.getBookedOn() != null) {
+            existingBooking.setBookedOn(booking.getBookedOn());
+        }
+
+        if(booking.getCancelledOn() != null) {
+            existingBooking.setCancelledOn(booking.getCancelledOn());
+        }
+
+        if(booking.getIsValid() != null) {
+            existingBooking.setIsValid(booking.getIsValid());
+        }
+
         bookingRepository.save(existingBooking);
         return existingBooking;
     }

@@ -43,8 +43,7 @@ public class BookingsController {
     // build edit tour package REST API
     @PutMapping("/{id}")
     @RolesAllowed({"OPERATOR", "REGISTERED_USER"})
-    public ResponseEntity<Bookings> updateBooking(@PathVariable("id") long id,
-                                                         @RequestBody Bookings booking) {
+    public ResponseEntity<Bookings> updateBooking(@PathVariable("id") long id, @RequestBody Bookings booking) {
         return new ResponseEntity<Bookings>(bookingService.updateBooking(booking, id), HttpStatus.OK);
     }
 

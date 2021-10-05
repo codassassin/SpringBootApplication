@@ -1,14 +1,20 @@
 package com.codassassin.tourmanagement.services.impl;
 
 
+import com.codassassin.tourmanagement.model.Bookings;
 import com.codassassin.tourmanagement.model.User;
 import com.codassassin.tourmanagement.repository.UserRepository;
 import com.codassassin.tourmanagement.services.UserService;
 import com.codassassin.tourmanagement.services.UserManagementService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -39,11 +45,26 @@ public class UserServiceImpl implements UserService, UserManagementService {
     public User updateTourOperator(long id, User user) {
         User existingUser = userRepository.getUserById(id);
 
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setUserType(user.getUserType());
-        existingUser.setUsername(user.getUsername());
+        if(user.getFirstName() != null) {
+            existingUser.setFirstName(user.getFirstName());
+        }
+
+        if(user.getLastName() != null) {
+            existingUser.setLastName(user.getLastName());
+        }
+
+        if(user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+        }
+
+        if(user.getUserType() != null) {
+            existingUser.setUserType(user.getUserType());
+        }
+
+        if(user.getUsername() != null) {
+            existingUser.setUsername(user.getUsername());
+        }
+
         return existingUser;
     }
 
