@@ -2,6 +2,7 @@ package com.codassassin.tourmanagement.controller;
 
 import com.codassassin.tourmanagement.model.Bookings;
 import com.codassassin.tourmanagement.services.BookingService;
+import com.codassassin.tourmanagement.services.impl.BookingResponseObject;
 import com.codassassin.tourmanagement.services.impl.SaveBookingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,18 @@ public class BookingsController {
     // build create tour package REST API
     @PostMapping()
     @RolesAllowed({"REGISTERED_USER"})
-    public ResponseEntity<Bookings> saveBooking(@RequestBody SaveBookingRequest request) throws Exception{
-        return new ResponseEntity<Bookings>(bookingService.saveBooking(request), HttpStatus.CREATED);
+    public BookingResponseObject saveBooking(@RequestBody SaveBookingRequest request) throws Exception{
+        BookingResponseObject response = new BookingResponseObject();
+        try {
+            Bookings booking = bookingService.saveBooking(request);
+            response.setStatus(true);
+            response.setBooking(booking);
+            return response;
+        } catch(Exception ex) {
+            response.setStatus(false);
+            response.setError(ex.toString());
+            return response;
+        }
     }
 
     //saveBooking(@RequestBody SaveBookingRequest request)
