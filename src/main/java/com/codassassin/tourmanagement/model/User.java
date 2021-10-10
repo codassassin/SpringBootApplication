@@ -4,7 +4,7 @@ package com.codassassin.tourmanagement.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
 @Data
 @Entity
@@ -31,6 +31,11 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+                                        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 
 //    @OneToMany(mappedBy="tour_operator")
 //    private Set<Bookings> booking;
