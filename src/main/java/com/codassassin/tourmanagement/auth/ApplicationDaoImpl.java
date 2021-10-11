@@ -16,6 +16,6 @@ public class ApplicationDaoImpl {
     public Optional<ApplicationUser> selectApplicationUserByUsername(String username) {
         List<?> result = entityManager.createQuery("select u.user_name from tour_operator u where u.id=1").getResultList();
         System.out.println(result);
-        return null;
+        return Optional.empty();
     }
 }
