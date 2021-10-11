@@ -1,20 +1,14 @@
 package com.codassassin.tourmanagement.services.impl;
 
 
-import com.codassassin.tourmanagement.model.Bookings;
 import com.codassassin.tourmanagement.model.User;
 import com.codassassin.tourmanagement.repository.UserRepository;
 import com.codassassin.tourmanagement.services.UserService;
 import com.codassassin.tourmanagement.services.UserManagementService;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
